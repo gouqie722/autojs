@@ -3,7 +3,7 @@ $ui.layout(
   <vertical>
     <button text="第一个按钮"/>
     <text textSize="16sp" text="请输入手机号"/>
-    <input id="phone" phoneNumber="true"  />
+    <input id="phone" phoneNumber="true" text="10086"  />
     <text textSize="16sp" text="请输入时间(单位秒: 最小值20秒)" />
     <input id="num" phoneNumber="true"  />
     <button id="btn" text="执行"/>
@@ -12,6 +12,7 @@ $ui.layout(
 );
 
 let timer = null;
+let thread = null;
 $ui.btn.click(function () {
   handleClick();
 });
@@ -26,10 +27,16 @@ function handleClick() {
     console.log('清除定时器');
     clearInterval(timer);
   }
-  timer = setTimeout(() => {
+  thread = threads.start(function () {
+    timer = setInterval(() => {
+      console.log('开启新的线程 => setInterval => 监听数据变化', phone, num);
+    }, 2000);
+    console.log('开启新的线程', phone, num);
     test(phone, num);
-    handleClick();
-  }, Number(num) * 1000);
+  });
+  setTimeout(() => {
+    thread.interrupt();
+  }, 10000);
 }
 
 function test(phone, num) {

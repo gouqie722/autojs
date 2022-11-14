@@ -130,14 +130,32 @@ setTimeout(() => {
     action: 'android.intent.action.DIAL',
     data: 'tel:15129203018'
   }
-  console.log({ a: 233 }, 15129203018, app);
+  console.log({ a: 233 }, 15129203018);
   
   app.startActivity(intent)
   
   sleep(500);
   
   console.log('拨打高清电话 11');
-  desc('拨打高清电话').click();
+  // desc('拨打高清电话').click();
+  // var dialButton = id('dialButton').findOne();
+  var singleCallContainer = id('single_call_container').findOne();
+  console.log('singleCallContainer => children', singleCallContainer.children());
+  console.log('singleCallContainer => parent', singleCallContainer.parent());
+  console.log('singleCallContainer => parent = parent', singleCallContainer.parent().parent());
+  if (singleCallContainer.children().length) {
+    singleCallContainer.children().forEach(function(child){
+      child.click();
+      log(child.className(), 'child info');
+    });
+  } else if (singleCallContainer.clickable) {
+    singleCallContainer.click();
+  } else if (singleCallContainer.parent().clickable) {
+    console.log('parent click');
+    singleCallContainer.parent().click();
+  } else {
+    singleCallContainer.parent().parent().click();
+  }
 }, 3000);
 
 console.log({ a: 233 }, 15129203018);
