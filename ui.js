@@ -1,0 +1,57 @@
+"ui";
+$ui.layout(
+  <vertical>
+    <button text="第一个按钮"/>
+    <text textSize="16sp" text="请输入手机号"/>
+    <input id="phone" phoneNumber="true"  />
+    <text textSize="16sp" text="请输入时间(单位秒: 最小值20秒)" />
+    <input id="num" phoneNumber="true"  />
+    <button id="btn" text="执行"/>
+    <button id="btn1" text="停止执行"/>
+  </vertical>
+);
+
+let timer = null;
+$ui.btn.click(function () {
+  handleClick();
+});
+
+function handleClick() {
+  var phone = $ui.phone.getText().toString();
+  var num = $ui.num.getText().toString();
+  num = Number(num) < 5 ? 5 : Number(num);
+  toast(phone + "您好! 时间: " + num);
+  console.log('点击了按钮');
+  if (timer) {
+    console.log('清除定时器');
+    clearInterval(timer);
+  }
+  timer = setTimeout(() => {
+    test(phone, num);
+    handleClick();
+  }, Number(num) * 1000);
+}
+
+function test(phone, num) {
+  console.log(phone + "您好! 时间: " + Number(num) * 1000);
+  var intent = {
+    action: 'android.intent.action.DIAL',
+    data: 'tel:' + phone,
+  }
+  console.log({ a: 233 }, phone);
+
+  app.startActivity(intent)
+  sleep(500);
+
+  console.log('拨打高清电话 11');
+  desc('拨打高清电话').click();
+}
+
+$ui.btn1.click(function () {
+  console.log('停止执行');
+  if (timer) {
+    console.log('清除定时器');
+    clearTimeout(timer);
+  }
+});
+// 192.168.10.71
