@@ -39,6 +39,12 @@ function handleClick() {
   }, 10000);
 }
 
+var w = floaty.rawWindow(
+  <frame gravity="center">
+      <text id="text">悬浮文字</text>
+  </frame>
+);
+
 function test(phone, num) {
   console.log(phone + "您好! 时间: " + Number(num) * 1000);
   var intent = {
