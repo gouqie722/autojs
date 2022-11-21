@@ -31,12 +31,35 @@ console.log('start');
   
 // }, 3000);
 
-id("tv_price").findOne().parent().children()
-  .forEach(function(child){
-    log(child.className());
-    log(child.text(), '文本');
-  });
 
+
+var watchData = {
+  BTC: -0.3,
+  ETH: -0.4,
+  OKT: -0.5,
+  LTC: -0.6,
+  DOT: -0.7,
+  DOGE: -0.8,
+};
+
+
+var tv_name = id("tv_name").find();
+var tv_change_percent = id("tv_change_percent").find();
+var tv_price = id("tv_price").find();
+
+var len = tv_name.length;
+
+console.log(len, '长度');
+
+// id("tv_name").find().parent().children()
+//   .forEach(function(child){
+//     log(child.className());
+//     log(child.text(), '文本');
+//   });
+
+for (let i = 0; i < len; i++) {
+  console.log('监听的数据', tv_change_percent[i].text(), tv_price[i].text(), tv_name[i].text().split('\n')[0]);
+}
 
 console.log('end');
 
